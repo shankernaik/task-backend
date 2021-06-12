@@ -1,0 +1,15 @@
+language: go
+sudo: false
+
+go:
+  - master
+  - "1.13"
+
+install:
+  - go get -u golang.org/x/lint/golint
+  - go get -u github.com/mattn/goveralls
+
+matrix:
+  allow_failures:
+    - go: master
+  fast_finish: true
