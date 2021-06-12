@@ -1,4 +1,4 @@
-# task-backend
+# task-backend [![Build Status](https://travis-ci.com/shankernaik/task-backend.svg?branch=main)](https://travis-ci.com/shankernaik/task-backend)
 
 Task is a simple task management service deployed using Echo framework.
 
