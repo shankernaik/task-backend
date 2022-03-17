@@ -1,0 +1,139 @@
+openapi: 3.0.0
+servers: []
+info:
+  description: Using the task-backend api. User can fetch theire task and can also update, delete, add new task.
+  version: "1.0.0"
+  title: Task-Backend
+  contact:
+    name: Shanker Naik
+    email: shanker_naik@mail.com
+  license:
+    name: MPL-2.0 License
+    url: https://github.com/shankernaik/task-backend/blob/main/LICENSE
+  
+paths:
+  /api/v1/tasks:
+    get:
+      summary: Fetches all the task in the database.
+      operationId: getTasks
+      description: |
+        Fetches all the task objects and returns as an array.
+      responses:
+        '200':
+          description: Object array of tasks.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+        '400':
+          description: bad request.
+    post:
+      summary: adds an task item.
+      operationId: addTask
+      description: Adds an task item to the system
+      responses:
+        '201':
+          description: task added succesfully.
+        '400':
+          description: invalid input, object invalid
+        '409':
+          description: an existing task item already exists
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        description: Inventory item to add
+        
+    put:
+      summary: update the task.
+      operationId: putTask
+      description: update the specfied task using the request body.
+      
+      
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Task'
+        description: Inventory item to add
+        
+      responses:
+        '200':
+          description: Task updated succesfully.
+          
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad request
+        
+  /api/v1/task/{id}:
+    get:
+      summary: get specific task item.
+      operationId: getTask
+      description: get task based on id provided.
+      
+        
+      parameters: 
+        - in: path
+          name: id
+          schema:
+              type: string
+          required: true
+          description: uuid ID of the task.
+      
+      responses:
+        '200':
+          description: Object returned with specified id.
+    
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad request
+    delete:
+      summary: delete a task with specified id.
+      operationId: deleteTask
+      description: delete a specified task.
+      
+      parameters: 
+        - in: path
+          name: id
+          schema:
+              type: string
+          required: true
+          description: uuid ID of the task.
+      
+      responses:
+        '200':
+          description: task item deleted succesfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Task'
+        '400':
+          description: Bad request
+      
+components:
+  schemas:
+    Task:
+      type: object
+      required:
+        - id
+        - title
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: d290f1ee-6c54-4b01-90e6-d701748f0851
+        title:
+          type: string
+          example: Document api.
+        description:
+          type: string
+          example: Document the task api for tester.
